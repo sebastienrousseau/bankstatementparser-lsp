@@ -2,7 +2,7 @@
   "name": "bankstatementparser-lsp-mt940",
   "displayName": "BankStatementParser - MT940 bank statements",
   "description": "Live diagnostics for MT940 bank-statement files (.mt940 / .sta), powered by the bankstatementparser-lsp language server.",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publisher": "sebastienrousseau",
   "license": "Apache-2.0",
   "repository": {

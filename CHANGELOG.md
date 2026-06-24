@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.11] - 2026-06-24
+
+### Changed
+
+- **Pruned CI over-scaffolding.** Removed the `nightly.yml` and
+  `docs.yml` GitHub Actions workflows; the maintained surface is now
+  `ci.yml`, `pr.yml`, `codeql.yml`, `security.yml`, `release.yml`, and
+  `docker.yml`. No README badge or Makefile target referenced the
+  deleted workflows.
+
+### Added
+
+- **Install smoke test** (`smoke` job in `ci.yml`, Python 3.12 / Ubuntu):
+  builds the wheel with `python -m build`, installs it into a fresh
+  throwaway virtualenv so `bankstatementparser` and `pygls` are pulled
+  from PyPI exactly as an end user would get them, prints
+  `bankstatementparser_lsp.__version__`, and runs one example
+  (`examples/01_lsp_helpers.py`) from a neutral working directory to
+  prove the installed package works without the source tree on the path.
+- **Expanded golden-style diagnostics tests** asserting exact
+  `(line, code, severity)` tuples while keeping 100% line + branch
+  coverage. New cases cover: a single document that triggers all four
+  rule codes (`missing-tag`, `malformed-balance`,
+  `malformed-statement-line`, `orphan-information-line`) at once;
+  multiple `:61:` / `:86:` statement/information pairs; CRLF
+  (`\r\n`) line endings; leading and trailing blank lines together
+  with a UTF-8 BOM; and a fully valid multi-statement MT940 document
+  that yields zero diagnostics.
+
+### Fixed
+
+- **UTF-8 BOM false positive.** A leading UTF-8 byte-order mark
+  (`U+FEFF`) is not whitespace, so when an MT940 file was exported with a
+  BOM it clung to the first tag (`﻿:20:`) and the engine reported a
+  spurious `missing-tag` for `:20:`. `diagnostics_for_mt940` now strips a
+  single leading BOM before scanning, so BOM-prefixed documents lint
+  identically to their plain counterparts. This is the only engine
+  behaviour change in this release.
+
+The diagnostic engine still emits the same four codes — `missing-tag`,
+`malformed-balance`, `malformed-statement-line`, and
+`orphan-information-line` — over the same four runnable examples
+(`examples/01_lsp_helpers.py` … `examples/04_server_publish.py`).
+
+[0.0.11]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.11
+
 ## [0.0.10] - 2026-06-24
 
 ### Added
