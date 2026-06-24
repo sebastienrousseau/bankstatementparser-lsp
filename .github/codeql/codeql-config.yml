@@ -1,0 +1,14 @@
+name: "bankstatementparser-lsp CodeQL config"
+
+# Examples deliberately demonstrate the LSP surface with deliberately-bad
+# sample data (e.g. malformed MT940 balance and statement lines). Excluding
+# the demo and test directories keeps the scan focused on production code
+# in ``bankstatementparser_lsp/``.
+paths-ignore:
+  - examples
+  - tests
+
+# Use the default + security-extended query suite so we get the same
+# coverage GitHub's default setup would have offered.
+queries:
+  - uses: security-and-quality

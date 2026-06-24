@@ -1,0 +1,47 @@
+{
+  "name": "bankstatementparser-lsp-mt940",
+  "displayName": "BankStatementParser - MT940 bank statements",
+  "description": "Live diagnostics for MT940 bank-statement files (.mt940 / .sta), powered by the bankstatementparser-lsp language server.",
+  "version": "0.0.1",
+  "publisher": "sebastienrousseau",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastienrousseau/bankstatementparser-lsp"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": ["Linters", "Programming Languages"],
+  "activationEvents": ["onLanguage:mt940"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "mt940",
+        "aliases": ["MT940", "SWIFT MT940"],
+        "extensions": [".mt940", ".sta"]
+      }
+    ],
+    "configuration": {
+      "title": "BankStatementParser (MT940)",
+      "properties": {
+        "bankstatementparser.serverCommand": {
+          "type": "string",
+          "default": "bankstatementparser-lsp",
+          "description": "Command that starts the BankStatementParser language server (install with: pip install bankstatementparser-lsp)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "typescript": "^5.0.0"
+  }
+}

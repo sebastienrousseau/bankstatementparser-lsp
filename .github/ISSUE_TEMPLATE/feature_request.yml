@@ -1,0 +1,53 @@
+name: Feature Request
+description: Suggest a new MT940 diagnostic or LSP feature for bankstatementparser-lsp
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: |
+        What can't you express in an editor today? If this surfaces an
+        existing bankstatementparser validator, link to it.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: |
+        Sketch the LSP feature - method (textDocument/*), payload
+        shape, expected severity / kind. Reference the parent bankstatementparser
+        API surface where relevant.
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: LSP Surface
+      options:
+        - Diagnostics (JSON mode)
+        - Diagnostics (CSV mode)
+        - Completion
+        - Hover
+        - Code action
+        - Formatting
+        - Document symbols
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Real-World Use Case
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+  - type: textarea
+    id: contribution
+    attributes:
+      label: Willingness To Contribute
