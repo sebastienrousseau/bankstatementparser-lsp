@@ -43,6 +43,7 @@ examples: ## Verify example scripts run
 	$(POETRY) run python examples/01_lsp_helpers.py
 	$(POETRY) run python examples/02_severity_filtering.py
 	$(POETRY) run python examples/03_lsp_conversion.py
+	$(POETRY) run python examples/04_server_publish.py
 
 doc-coverage: ## Enforce the 100% docstring coverage gate
 	$(POETRY) run interrogate -c pyproject.toml -v bankstatementparser_lsp

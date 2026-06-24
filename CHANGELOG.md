@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.1] - 2026-06-24
+## [0.0.10] - 2026-06-24
 
 ### Added
 
@@ -29,8 +29,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pure, importable helpers (`Diagnostic`, `Severity`,
   `diagnostics_for_mt940`) so the diagnostics are unit-testable in
   isolation and reusable outside an editor.
-- Three runnable examples (`examples/01_lsp_helpers.py`,
-  `examples/02_severity_filtering.py`, `examples/03_lsp_conversion.py`).
+- Four runnable examples (`examples/01_lsp_helpers.py`,
+  `examples/02_severity_filtering.py`, `examples/03_lsp_conversion.py`,
+  `examples/04_server_publish.py`) covering the clean and broken
+  documents, the `Diagnostic` / `Severity` types, the `lsprotocol`
+  conversion, and the server's lint-and-publish path (driven by a fake
+  `LanguageServer`, so no editor is required).
 - Part of the **bankstatementparser suite** alongside the core
   `bankstatementparser` library.
 - **Quality gates pinned at 100%** from the initial release:
@@ -40,7 +44,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `interrogate --fail-under=100` for module and function docstring
     coverage.
   - `ruff` and `mypy --strict` clean.
+  - Documentation and example regression suites
+    (`tests/test_docs_accuracy.py`, `tests/test_regression_docs.py`,
+    `tests/test_regression_examples.py`) that assert the README, docs,
+    and shipped examples stay in lockstep with the public API: the
+    version string, every exported symbol, every diagnostic rule code,
+    and every example path are checked, and each documented `python`
+    block and `examples/*.py` script is executed.
 - `scripts/verify_versions.py` — pre-release script asserting
   `__version__`, `pyproject.toml`, and `CHANGELOG.md` agree.
 
-[0.0.1]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.1
+[0.0.10]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.10
