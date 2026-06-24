@@ -193,3 +193,170 @@ def test_publish_clean_document_sends_empty_list():
     ls, published = _fake_server(GOOD)
     _publish(ls, "file:///clean.mt940")
     assert published == [("file:///clean.mt940", [])]
+
+
+# ---------------------------------------------------------------------------
+# Golden-style diagnostics: assert exact (line, code, severity) tuples.
+# ---------------------------------------------------------------------------
+
+
+def _tuples(text):
+    """Return ``(line, code, severity)`` tuples for a document, in order."""
+    return [(d.line, d.code, d.severity) for d in diagnostics_for_mt940(text)]
+
+
+def test_all_four_codes_in_one_document():
+    """One document triggers every rule code with exact line/severity.
+
+    Per-line diagnostics are emitted in source order, then the
+    missing-tag diagnostics (here ``:25:`` and ``:28C:``) are appended,
+    all anchored to line 0.
+    """
+    text = (
+        ":20:REF\n"
+        ":60F:NOTABALANCE\n"
+        ":86:orphan note\n"
+        ":61:NOTVALID\n"
+        ":62F:C230102EUR1500,00"
+    )
+    assert _tuples(text) == [
+        (1, "malformed-balance", Severity.ERROR),
+        (2, "orphan-information-line", Severity.WARNING),
+        (3, "malformed-statement-line", Severity.ERROR),
+        (0, "missing-tag", Severity.ERROR),
+        (0, "missing-tag", Severity.ERROR),
+    ]
+
+
+def test_multiple_statement_and_information_pairs_are_clean():
+    """Several valid ``:61:`` / ``:86:`` pairs produce no diagnostics."""
+    text = (
+        ":20:REF\n"
+        ":25:1234567890\n"
+        ":28C:00001/001\n"
+        ":60F:C230101EUR1000,00\n"
+        ":61:2301020102C500,00NTRFNONREF//a\n"
+        ":86:first info\n"
+        ":61:2301030103D250,00NTRFNONREF//b\n"
+        ":86:second info\n"
+        ":62F:C230103EUR1250,00"
+    )
+    assert _tuples(text) == []
+
+
+def test_multiple_malformed_statement_and_orphan_pairs():
+    """Two bad ``:61:`` lines and the ``:86:`` lines that follow them.
+
+    The first ``:86:`` is orphaned because no valid ``:61:`` has been
+    seen yet; once a malformed ``:61:`` never flips ``seen_statement``,
+    every following ``:86:`` stays orphaned too.
+    """
+    text = (
+        ":20:REF\n"
+        ":25:1234567890\n"
+        ":28C:00001/001\n"
+        ":60F:C230101EUR1000,00\n"
+        ":61:BADONE\n"
+        ":86:info one\n"
+        ":61:BADTWO\n"
+        ":86:info two\n"
+        ":62F:C230102EUR1500,00"
+    )
+    assert _tuples(text) == [
+        (4, "malformed-statement-line", Severity.ERROR),
+        (5, "orphan-information-line", Severity.WARNING),
+        (6, "malformed-statement-line", Severity.ERROR),
+        (7, "orphan-information-line", Severity.WARNING),
+    ]
+
+
+def test_crlf_line_endings_are_clean():
+    """A clean document with Windows CRLF endings lints identically."""
+    text = (
+        ":20:REF\r\n"
+        ":25:1234567890\r\n"
+        ":28C:00001/001\r\n"
+        ":60F:C230101EUR1000,00\r\n"
+        ":61:2301020102C500,00NTRFNONREF//a\r\n"
+        ":86:Salary\r\n"
+        ":62F:C230102EUR1500,00\r\n"
+    )
+    assert _tuples(text) == []
+
+
+def test_crlf_line_endings_report_exact_lines():
+    """CRLF endings do not shift the reported line numbers."""
+    text = (
+        ":20:REF\r\n"
+        ":25:1234567890\r\n"
+        ":28C:00001/001\r\n"
+        ":60F:NOTABALANCE\r\n"
+        ":61:2301020102C500,00NTRFNONREF//a\r\n"
+        ":62F:C230102EUR1500,00\r\n"
+    )
+    assert _tuples(text) == [(3, "malformed-balance", Severity.ERROR)]
+
+
+def test_leading_blank_lines_and_trailing_blank_lines_are_clean():
+    """Leading and trailing blank lines do not produce diagnostics."""
+    text = (
+        "\n"
+        "   \n"
+        ":20:REF\n"
+        ":25:1234567890\n"
+        ":28C:00001/001\n"
+        ":60F:C230101EUR1000,00\n"
+        ":61:2301020102C500,00NTRFNONREF//a\n"
+        ":86:Salary\n"
+        ":62F:C230102EUR1500,00\n"
+        "\n"
+        "   \n"
+    )
+    assert _tuples(text) == []
+
+
+def test_bom_at_start_with_trailing_blank_lines_is_clean():
+    """A real byte-0 UTF-8 BOM plus trailing blank lines lints clean.
+
+    The BOM is prefixed directly to the first tag (``﻿:20:``), exactly
+    as a UTF-8-with-BOM export produces it; the engine strips the single
+    leading BOM so ``:20:`` is still recognised.
+    """
+    text = (
+        "﻿:20:REF\n"
+        ":25:1234567890\n"
+        ":28C:00001/001\n"
+        ":60F:C230101EUR1000,00\n"
+        ":61:2301020102C500,00NTRFNONREF//a\n"
+        ":86:Salary\n"
+        ":62F:C230102EUR1500,00\n"
+        "\n"
+        "   \n"
+    )
+    assert _tuples(text) == []
+
+
+def test_bom_prefixed_first_tag_is_not_a_missing_tag():
+    """A BOM glued to ``:20:`` must not be misread as a missing tag."""
+    bare = (
+        ":20:REF\n:25:1234567890\n:28C:00001/001\n"
+        ":60F:C230101EUR1000,00\n"
+        ":61:2301020102C500,00NTRFNONREF//a\n:86:Salary\n"
+        ":62F:C230102EUR1500,00"
+    )
+    assert _tuples("﻿" + bare) == _tuples(bare) == []
+
+
+def test_valid_multi_statement_document_has_zero_diagnostics():
+    """Two back-to-back valid MT940 statements produce no diagnostics."""
+    text = (
+        ":20:REF1\n:25:1234567890\n:28C:00001/001\n"
+        ":60F:C230101EUR1000,00\n"
+        ":61:2301020102C500,00NTRFNONREF//a\n:86:info a\n"
+        ":62F:C230102EUR1500,00\n"
+        ":20:REF2\n:25:1234567890\n:28C:00002/001\n"
+        ":60F:C230103EUR1500,00\n"
+        ":61:2301040104D200,00NTRFNONREF//b\n:86:info b\n"
+        ":62F:C230104EUR1300,00"
+    )
+    assert _tuples(text) == []

@@ -103,3 +103,38 @@ jobs:
       - name: Run examples
         run: |
           for f in examples/*.py; do echo "=== $f ==="; python "$f"; done
+
+  smoke:
+    name: Install smoke test (wheel from PyPI deps)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Build the wheel
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+          python -m build
+
+      - name: Install the wheel into a fresh virtualenv
+        run: |
+          python -m venv "$RUNNER_TEMP/smoke"
+          "$RUNNER_TEMP/smoke/bin/python" -m pip install --upgrade pip
+          "$RUNNER_TEMP/smoke/bin/python" -m pip install dist/*.whl
+
+      - name: Import the installed package and print its version
+        run: |
+          "$RUNNER_TEMP/smoke/bin/python" \
+            -c "import bankstatementparser_lsp; print(bankstatementparser_lsp.__version__)"
+
+      - name: Run an example from a neutral working directory
+        run: |
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/smoke/bin/python" "$GITHUB_WORKSPACE/examples/01_lsp_helpers.py"

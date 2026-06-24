@@ -85,6 +85,11 @@ def diagnostics_for_mt940(text: str) -> list[Diagnostic]:
         A list of :class:`Diagnostic` objects (empty when the document
         is clean or has no content).
     """
+    # A leading UTF-8 BOM (U+FEFF) is not whitespace, so without this it
+    # would cling to the first tag (e.g. ``﻿:20:``) and be misread as
+    # a missing :20:. Strip a single leading BOM before scanning.
+    if text.startswith("﻿"):
+        text = text[1:]
     lines = text.splitlines()
     if not any(line.strip() for line in lines):
         return []

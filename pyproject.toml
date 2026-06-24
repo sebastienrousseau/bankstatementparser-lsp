@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bankstatementparser-lsp"
-version = "0.0.10"
+version = "0.0.11"
 description = "Language Server Protocol (LSP) server for linting MT940 bank statement files with the bankstatementparser library."
 authors = ["Sebastien Rousseau <sebastian.rousseau@gmail.com>"]
 license = "Apache-2.0"

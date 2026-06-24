@@ -5,15 +5,18 @@ of the [bankstatementparser](https://github.com/sebastienrousseau/bankstatementp
 The versions are **target** windows; releases ship when the gates pass,
 not on a calendar.
 
-## v0.0.10 - Initial release (current)
+## v0.0.11 - Hardening (current)
 
 - MT940 diagnostics over stdio: missing mandatory tags, malformed
   balance lines (`:60F:` / `:62F:`), malformed statement lines (`:61:`),
   and orphan information lines (`:86:`).
-- Pure, importable diagnostic engine (`diagnostics_for_mt940`).
+- Pure, importable diagnostic engine (`diagnostics_for_mt940`), now
+  robust to a leading UTF-8 BOM and CRLF line endings.
 - 100% line+branch coverage gate, 100% docstring coverage gate.
-- Three runnable examples covering the engine, severity grouping, and
-  the `lsprotocol` conversion.
+- Golden-style diagnostics tests pinning exact `(line, code, severity)`
+  tuples; wheel-install smoke test in CI; pruned CI workflows.
+- Four runnable examples covering the engine, severity grouping, the
+  `lsprotocol` conversion, and the server's publish path.
 
 ## v0.1.0 - Richer statement diagnostics
 
