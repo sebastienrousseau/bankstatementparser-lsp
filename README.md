@@ -246,9 +246,12 @@ publishing.
 The runnable version of this snippet lives in
 [`examples/01_lsp_helpers.py`](examples/01_lsp_helpers.py). See also
 [`02_severity_filtering.py`](examples/02_severity_filtering.py) (grouping
-by severity) and
+by severity),
 [`03_lsp_conversion.py`](examples/03_lsp_conversion.py) (the
-`lsprotocol` conversion the server performs).
+`lsprotocol` conversion the server performs), and
+[`04_server_publish.py`](examples/04_server_publish.py) (the server's
+lint-and-publish path driven by a fake `LanguageServer`, so it runs
+without an editor).
 
 ---
 
@@ -306,9 +309,14 @@ A `Makefile` orchestrates the quality gates (kept in lockstep with CI):
 | `make type-check` | `mypy --strict` |
 | `make examples` | Run the example scripts |
 
-Current state (v0.0.1): **13 tests passing, 100% line + branch
+Current state (v0.0.1): **41 tests passing, 100% line + branch
 coverage** against a 100% enforced floor, mypy `--strict` clean,
-interrogate 100% docstring coverage.
+interrogate 100% docstring coverage. The suite includes documentation
+and example regression tests
+([`tests/test_docs_accuracy.py`](tests/test_docs_accuracy.py),
+[`tests/test_regression_docs.py`](tests/test_regression_docs.py),
+[`tests/test_regression_examples.py`](tests/test_regression_examples.py))
+that execute every documented snippet and every `examples/*.py` script.
 
 ---
 
