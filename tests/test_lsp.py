@@ -195,6 +195,46 @@ def test_publish_clean_document_sends_empty_list():
     assert published == [("file:///clean.mt940", [])]
 
 
+def test_did_open_lints_and_publishes():
+    """The ``didOpen`` feature binding lints the opened document."""
+    pytest.importorskip("pygls")
+    from bankstatementparser_lsp.server import did_open
+
+    ls, published = _fake_server(":20:ONLY")
+    params = types.SimpleNamespace(
+        text_document=types.SimpleNamespace(uri="file:///opened.mt940")
+    )
+    did_open(ls, params)
+    assert published[0][0] == "file:///opened.mt940"
+    assert any(d.code == "missing-tag" for d in published[0][1])
+
+
+def test_did_change_relints_and_publishes():
+    """The ``didChange`` feature binding re-lints the changed document."""
+    pytest.importorskip("pygls")
+    from bankstatementparser_lsp.server import did_change
+
+    ls, published = _fake_server(GOOD)
+    params = types.SimpleNamespace(
+        text_document=types.SimpleNamespace(uri="file:///changed.mt940")
+    )
+    did_change(ls, params)
+    assert published == [("file:///changed.mt940", [])]
+
+
+def test_main_starts_the_server_over_stdio(monkeypatch):
+    """``main`` starts the language server over stdio."""
+    pytest.importorskip("pygls")
+    from bankstatementparser_lsp import server as server_module
+
+    calls = []
+    monkeypatch.setattr(
+        server_module.server, "start_io", lambda: calls.append(True)
+    )
+    server_module.main()
+    assert calls == [True]
+
+
 # ---------------------------------------------------------------------------
 # Golden-style diagnostics: assert exact (line, code, severity) tuples.
 # ---------------------------------------------------------------------------
