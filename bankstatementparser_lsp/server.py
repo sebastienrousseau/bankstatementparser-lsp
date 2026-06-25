@@ -74,7 +74,7 @@ def _publish(ls: LanguageServer, uri: str) -> None:
 @server.feature(lsp.TEXT_DOCUMENT_DID_OPEN)
 def did_open(
     ls: LanguageServer, params: lsp.DidOpenTextDocumentParams
-) -> None:  # pragma: no cover - thin pygls event binding
+) -> None:
     """Lint a document when it is opened.
 
     Args:
@@ -87,7 +87,7 @@ def did_open(
 @server.feature(lsp.TEXT_DOCUMENT_DID_CHANGE)
 def did_change(
     ls: LanguageServer, params: lsp.DidChangeTextDocumentParams
-) -> None:  # pragma: no cover - thin pygls event binding
+) -> None:
     """Re-lint a document when it changes.
 
     Args:
@@ -97,7 +97,7 @@ def did_change(
     _publish(ls, params.text_document.uri)
 
 
-def main() -> None:  # pragma: no cover - process entry point
+def main() -> None:
     """Start the language server over stdio."""
     server.start_io()
 

@@ -16,6 +16,8 @@ claim that a human will trust and act on. Fix the docs, not the test.
 from __future__ import annotations
 
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 import bankstatementparser_lsp
@@ -234,11 +236,32 @@ class TestExamplesExist:
 
 
 def _actual_test_count() -> int:
-    """Count ``def test_`` functions across all test files."""
-    count = 0
-    for py in TESTS_DIR.rglob("*.py"):
-        count += len(re.findall(r"^\s*def test_", _read(py), re.MULTILINE))
-    return count
+    """Return the number of test cases pytest actually collects.
+
+    This counts the real executed cases — including every parametrised
+    instance — by asking pytest to collect the suite, so a ``N tests``
+    claim in the README must match what genuinely runs, not merely the
+    number of ``def test_`` functions.
+    """
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            str(TESTS_DIR),
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    match = re.search(r"(\d+)\s+tests?\s+collected", proc.stdout)
+    assert match is not None, (
+        "could not determine collected test count from pytest output:\n"
+        f"{proc.stdout}\n{proc.stderr}"
+    )
+    return int(match.group(1))
 
 
 class TestEngineClaims:
