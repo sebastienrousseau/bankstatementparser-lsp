@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.12] - 2026-06-25
+
+### Changed
+
+- **Audit pass.** Covered `main`/`did_open`/`did_change` (removed `# pragma: no cover` directives that masked testable code) and made the test-count guard count executed cases via `--collect-only`. The diagnostics engine is unchanged — it still emits `missing-tag`, `malformed-balance`, `malformed-statement-line`, and `orphan-information-line` — and the package still ships Four runnable examples.
+
 ## [0.0.11] - 2026-06-24
 
 ### Changed
@@ -49,6 +55,7 @@ The diagnostic engine still emits the same four codes — `missing-tag`,
 `orphan-information-line` — over the same four runnable examples
 (`examples/01_lsp_helpers.py` … `examples/04_server_publish.py`).
 
+[0.0.12]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.12
 [0.0.11]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.11
 
 ## [0.0.10] - 2026-06-24

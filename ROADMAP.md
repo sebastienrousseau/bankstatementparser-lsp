@@ -5,7 +5,7 @@ of the [bankstatementparser](https://github.com/sebastienrousseau/bankstatementp
 The versions are **target** windows; releases ship when the gates pass,
 not on a calendar.
 
-## v0.0.11 - Hardening (current)
+## v0.0.12 - Hardening (current)
 
 - MT940 diagnostics over stdio: missing mandatory tags, malformed
   balance lines (`:60F:` / `:62F:`), malformed statement lines (`:61:`),
