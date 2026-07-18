@@ -26,6 +26,6 @@ from bankstatementparser_lsp.diagnostics import (
     diagnostics_for_mt940,
 )
 
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 
 __all__ = ["Diagnostic", "Severity", "diagnostics_for_mt940"]

@@ -81,7 +81,7 @@ editor match the structure the parser will accept.
 
 | Channel | Command | Notes |
 | :--- | :--- | :--- |
-| PyPI | `pip install bankstatementparser-lsp` | Pulls in `bankstatementparser >= 0.0.9` + `pygls` |
+| PyPI | `pip install bankstatementparser-lsp` | Pulls in `bankstatementparser >= 0.0.11` + `pygls` |
 | Source | `git clone https://github.com/sebastienrousseau/bankstatementparser-lsp && cd bankstatementparser-lsp && poetry install` | For development |
 | Docker (GHCR) | `docker pull ghcr.io/sebastienrousseau/bankstatementparser-lsp:latest` | Multi-arch (linux/amd64, linux/arm64); runs `bankstatementparser-lsp` over stdio |
 
@@ -91,7 +91,7 @@ Verify the installation:
 
 ```sh
 python -c "import bankstatementparser_lsp; print('bankstatementparser-lsp', bankstatementparser_lsp.__version__)"
-# -> bankstatementparser-lsp 0.0.12
+# -> bankstatementparser-lsp 0.0.13
 ```
 
 <details>
@@ -309,7 +309,7 @@ A `Makefile` orchestrates the quality gates (kept in lockstep with CI):
 | `make type-check` | `mypy --strict` |
 | `make examples` | Run the example scripts |
 
-Current state (v0.0.12): **56 tests passing, 100% line + branch
+Current state (v0.0.13): **56 tests passing, 100% line + branch
 coverage** against a 100% enforced floor, mypy `--strict` clean,
 interrogate 100% docstring coverage. The suite includes documentation
 and example regression tests
