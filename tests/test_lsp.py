@@ -158,13 +158,19 @@ def _fake_server(source):
         """Return a document whose ``source`` is the fixture text."""
         return types.SimpleNamespace(source=source)
 
-    def publish_diagnostics(uri, diagnostics):
-        """Record the diagnostics published for ``uri``."""
-        published.append((uri, diagnostics))
+    def text_document_publish_diagnostics(params):
+        """Record the diagnostics published for ``params.uri``.
+
+        pygls 2.x replaced ``publish_diagnostics(uri, diagnostics)`` with
+        ``text_document_publish_diagnostics(params)``. The fake mirrors the
+        real signature so a future rename fails here rather than only in
+        production.
+        """
+        published.append((params.uri, list(params.diagnostics)))
 
     ls = types.SimpleNamespace(
         workspace=types.SimpleNamespace(get_text_document=get_text_document),
-        publish_diagnostics=publish_diagnostics,
+        text_document_publish_diagnostics=text_document_publish_diagnostics,
     )
     return ls, published
 

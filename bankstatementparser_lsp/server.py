@@ -21,7 +21,7 @@ diagnostics as they type. Run it with ``bankstatementparser-lsp``.
 """
 
 from lsprotocol import types as lsp
-from pygls.server import LanguageServer
+from pygls.lsp.server import LanguageServer
 
 from bankstatementparser_lsp import __version__
 from bankstatementparser_lsp.diagnostics import (
@@ -68,7 +68,9 @@ def _publish(ls: LanguageServer, uri: str) -> None:
     diagnostics = [
         _to_lsp_diagnostic(d) for d in diagnostics_for_mt940(document.source)
     ]
-    ls.publish_diagnostics(uri, diagnostics)
+    ls.text_document_publish_diagnostics(
+        lsp.PublishDiagnosticsParams(uri=uri, diagnostics=diagnostics)
+    )
 
 
 @server.feature(lsp.TEXT_DOCUMENT_DID_OPEN)
