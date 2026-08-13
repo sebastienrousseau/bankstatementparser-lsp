@@ -10,7 +10,8 @@ language server runs on every ``textDocument/didOpen`` and
 ``textDocument/didChange`` notification: it reads the document from the
 workspace, lints it with :func:`diagnostics_for_mt940`, converts each
 internal :class:`Diagnostic` to an ``lsprotocol`` diagnostic via
-:func:`_to_lsp_diagnostic`, and calls ``publish_diagnostics``.
+:func:`_to_lsp_diagnostic`, and calls
+``text_document_publish_diagnostics``.
 
 This example drives that exact path with a fake ``LanguageServer`` built
 from :class:`types.SimpleNamespace`, so it needs no running editor and no
@@ -40,13 +41,13 @@ def make_fake_server(
         """Return a document whose ``source`` is the fixture text."""
         return types.SimpleNamespace(source=source)
 
-    def publish_diagnostics(uri: str, diagnostics: list[object]) -> None:
-        """Record the diagnostics published for ``uri``."""
-        published.append((uri, diagnostics))
+    def text_document_publish_diagnostics(params: object) -> None:
+        """Record the diagnostics published for ``params.uri``."""
+        published.append((params.uri, list(params.diagnostics)))
 
     server = types.SimpleNamespace(
         workspace=types.SimpleNamespace(get_text_document=get_text_document),
-        publish_diagnostics=publish_diagnostics,
+        text_document_publish_diagnostics=text_document_publish_diagnostics,
     )
     return server, published
 
