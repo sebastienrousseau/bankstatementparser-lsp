@@ -41,6 +41,14 @@ jobs:
           # Only the XML report is CI-specific.
           pytest tests/ --cov-report=xml -v
 
+      # The benchmark asserts no timing threshold -- wall-clock is not
+      # comparable between runners, and a flaky perf gate teaches
+      # people to ignore red. This proves it still runs against the
+      # current API rather than rotting into a file that reads as
+      # verified and is not.
+      - name: Run the benchmark
+        run: python benches/bench_diagnostics.py --quick
+
       - name: Enforce 100% docstring coverage
         run: interrogate -c pyproject.toml bankstatementparser_lsp
 
@@ -72,10 +80,10 @@ jobs:
           pip install ruff black mypy types-jsonschema
 
       - name: Ruff check
-        run: ruff check bankstatementparser_lsp/ tests/
+        run: ruff check bankstatementparser_lsp/ tests/ benches/ tests/
 
       - name: Black check
-        run: black --check bankstatementparser_lsp/ tests/
+        run: black --check bankstatementparser_lsp/ tests/ benches/
 
       - name: Mypy
         run: mypy bankstatementparser_lsp/

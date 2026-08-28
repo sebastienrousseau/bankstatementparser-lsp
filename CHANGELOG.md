@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.15] - 2026-08-29
+
+Brings this repository onto the **suite conformance gate**.
+
+### Added
+
+- **`benches/bench_diagnostics.py`** — how long the editor waits.
+
+  A language server is not measured in throughput. It is measured against
+  a person typing: the client recomputes diagnostics on every change, so
+  the only question is whether the answer arrives before the user
+  notices. The table marks two thresholds — **16 ms** (one frame, feels
+  instantaneous) and **100 ms** (the limit of "reacting instantly").
+
+  The number to read is the **budget**: how large a document stays
+  interactive. It is a budget, not a score.
+
+  For comparison across the three language servers in the suite, all
+  doing the same shape of work:
+
+  | Server | Cost | Interactive budget |
+  |---|---|---|
+  | `bankstatementparser-lsp` | 0.0018 ms/entry | ~56,000 entries |
+  | `pain001-lsp` | 0.08 ms/record | ~1,200 records |
+  | `camt053-lsp` | **0.86 ms/record** | **~116 records** |
+
+  The malformed column matters too: that is the state a document spends
+  most of its life in while somebody is typing. A linter fast on valid
+  input and slow on invalid input is slowest exactly when the editor
+  calls it most.
+
+  Nothing asserts a timing threshold — wall-clock is not comparable
+  between machines, and a flaky performance gate teaches people to
+  ignore red. CI runs `--quick`, so a benchmark that stops compiling
+  fails the build rather than rotting.
+
+  This server is the fastest of the three by two orders of magnitude:
+  0.0018 ms per entry, a budget of roughly 56,000 entries. It lints text
+  directly rather than validating records against a schema, which is
+  where the difference comes from.
+
+  No functional or API change: the diagnostics engine still emits
+  `missing-tag`, `malformed-balance`, `malformed-statement-line`, and
+  `orphan-information-line`, and the package still ships
+  Four runnable examples.
+
+- **`tests/test_suite_conformance.py`** — invariants shared by every
+  repository in the suite, vendored from one canonical copy and
+  checksummed by its own test.
+
+### Changed
+
+- CI lints, formats and runs `benches/` alongside everything else.
+- `tests/test_suite_conformance.py` is excluded from black: it is
+  generated, and the suite uses three different line lengths.
+
 ## [0.0.14] - 2026-08-28
 
 ### Changed
