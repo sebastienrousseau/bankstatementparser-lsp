@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.14] - 2026-08-28
+
+### Changed
+
+- **A plain `pytest` now enforces the same 100% coverage floor CI does.**
+  `--cov`, `--cov-branch` and `--cov-report=term-missing` move into
+  `[tool.pytest.ini_options] addopts`. Before this, running `pytest`
+  locally measured no coverage at all: the developer saw green and learned
+  otherwise from the build.
+
+  The gate itself was never missing — CI has always run
+  `--cov-fail-under=100`, so nothing could regress onto `main` unnoticed.
+  What was missing was the local half of it.
+
+- **The floor is stated once.** It was in two places, the
+  `--cov-fail-under` flag in `ci.yml` and `fail_under` under
+  `[tool.coverage.report]`, which is how two numbers meant to be equal stop
+  being equal. pytest-cov honours `fail_under` from the coverage config, so
+  the flag is gone from both `addopts` and the workflow and the number lives
+  in exactly one place.
+
+  CI now runs `pytest tests/ --cov-report=xml -v`; only the XML report is
+  CI-specific.
+
+No functional or API change: the diagnostics engine still emits
+`missing-tag`, `malformed-balance`, `malformed-statement-line`, and
+`orphan-information-line`, and the package still ships
+Four runnable examples.
+
+### Verification
+
+Coverage was already 100% and remains so. The gate was mutation-tested:
+adding a function no test calls drops coverage below the floor and fails
+the run, locally as well as in CI.
+
 ## [0.0.13] - 2026-07-18
 
 ### Changed
@@ -66,6 +101,7 @@ The diagnostic engine still emits the same four codes — `missing-tag`,
 `orphan-information-line` — over the same four runnable examples
 (`examples/01_lsp_helpers.py` … `examples/04_server_publish.py`).
 
+[0.0.14]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.14
 [0.0.13]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.13
 [0.0.12]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.12
 [0.0.11]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.11
