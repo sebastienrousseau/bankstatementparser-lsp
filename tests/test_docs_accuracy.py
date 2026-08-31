@@ -72,25 +72,25 @@ class TestVersionConsistency:
 
     def test_changelog_has_current_version_entry(self) -> None:
         version = _pyproject_version()
-        assert f"[{version}]" in _read(
-            CHANGELOG
-        ), f"CHANGELOG has no entry for current version {version}"
+        assert f"[{version}]" in _read(CHANGELOG), (
+            f"CHANGELOG has no entry for current version {version}"
+        )
 
     def test_readme_verify_snippet_matches_version(self) -> None:
         """The README install-check shows the real current version."""
         readme = _read(README)
         version = bankstatementparser_lsp.__version__
-        assert (
-            f"bankstatementparser-lsp {version}" in readme
-        ), f"README install-check should print version {version}"
+        assert f"bankstatementparser-lsp {version}" in readme, (
+            f"README install-check should print version {version}"
+        )
 
     def test_readme_state_line_matches_version(self) -> None:
         """The README 'Current state (vX)' line uses the real version."""
         readme = _read(README)
         version = _pyproject_version()
-        assert (
-            f"v{version}" in readme
-        ), f"README should reference v{version} in its current-state line"
+        assert f"v{version}" in readme, (
+            f"README should reference v{version} in its current-state line"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -112,15 +112,15 @@ class TestApiSurface:
 
     def test_exported_symbols_in_readme(self) -> None:
         for sym in bankstatementparser_lsp.__all__:
-            assert (
-                sym in self.readme_text
-            ), f"README doesn't mention public symbol '{sym}'"
+            assert sym in self.readme_text, (
+                f"README doesn't mention public symbol '{sym}'"
+            )
 
     def test_diagnostic_codes_in_readme(self) -> None:
         for code in DIAGNOSTIC_CODES:
-            assert (
-                f"`{code}`" in self.readme_text
-            ), f"README doesn't document diagnostic code '{code}'"
+            assert f"`{code}`" in self.readme_text, (
+                f"README doesn't document diagnostic code '{code}'"
+            )
 
     def test_server_conversion_symbol_in_readme(self) -> None:
         """The server's lsprotocol conversion is mentioned in the docs."""
@@ -130,17 +130,17 @@ class TestApiSurface:
         """Every documented code is actually emitted by the engine."""
         source = _read(SRC_DIR / "diagnostics.py")
         for code in DIAGNOSTIC_CODES:
-            assert (
-                f'code="{code}"' in source
-            ), f"diagnostics.py never emits documented code '{code}'"
+            assert f'code="{code}"' in source, (
+                f"diagnostics.py never emits documented code '{code}'"
+            )
 
     def test_no_undocumented_codes(self) -> None:
         """The engine emits no code the README forgets to document."""
         source = _read(SRC_DIR / "diagnostics.py")
         emitted = set(re.findall(r'code="([a-z-]+)"', source))
-        assert emitted == set(
-            DIAGNOSTIC_CODES
-        ), f"engine codes {emitted} != documented {set(DIAGNOSTIC_CODES)}"
+        assert emitted == set(DIAGNOSTIC_CODES), (
+            f"engine codes {emitted} != documented {set(DIAGNOSTIC_CODES)}"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -158,27 +158,27 @@ class TestChangelogAccuracy:
         section = self.changelog_text.split(f"[{version}]")[1]
         section = section.split("\n## [")[0]
         for code in DIAGNOSTIC_CODES:
-            assert (
-                f"`{code}`" in section
-            ), f"CHANGELOG v{version} doesn't document code '{code}'"
+            assert f"`{code}`" in section, (
+                f"CHANGELOG v{version} doesn't document code '{code}'"
+            )
 
     def test_changelog_example_count_matches_reality(self) -> None:
         version = _pyproject_version()
         section = self.changelog_text.split(f"[{version}]")[1]
         section = section.split("\n## [")[0]
         match = re.search(r"(\w+) runnable examples", section)
-        assert (
-            match is not None
-        ), "CHANGELOG should state the runnable-example count"
+        assert match is not None, (
+            "CHANGELOG should state the runnable-example count"
+        )
         words = {"Three": 3, "Four": 4, "Five": 5}
         claimed = words.get(match.group(1).capitalize())
-        assert (
-            claimed is not None
-        ), f"unrecognised example count word: {match.group(1)!r}"
+        assert claimed is not None, (
+            f"unrecognised example count word: {match.group(1)!r}"
+        )
         actual = len(list(EXAMPLES_DIR.glob("*.py")))
-        assert (
-            claimed == actual
-        ), f"CHANGELOG claims {claimed} examples but actual is {actual}"
+        assert claimed == actual, (
+            f"CHANGELOG claims {claimed} examples but actual is {actual}"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -198,16 +198,14 @@ class TestExamplesExist:
     def test_readme_example_paths_exist(self) -> None:
         for ref in self._referenced_scripts(self.readme_text):
             name = ref.split("/")[-1]
-            assert (
-                EXAMPLES_DIR / name
-            ).exists(), f"README references {ref} but file doesn't exist"
+            assert (EXAMPLES_DIR / name).exists(), (
+                f"README references {ref} but file doesn't exist"
+            )
 
     def test_examples_readme_paths_exist(self) -> None:
         for ref in self._referenced_scripts(self.examples_readme_text):
             name = ref.split("/")[-1]
-            assert (
-                EXAMPLES_DIR / name
-            ).exists(), (
+            assert (EXAMPLES_DIR / name).exists(), (
                 f"examples/README.md references {ref} but file is missing"
             )
 
@@ -217,17 +215,17 @@ class TestExamplesExist:
             for ref in self._referenced_scripts(self.examples_readme_text)
         }
         for script in EXAMPLES_DIR.glob("*.py"):
-            assert (
-                script.name in listed
-            ), f"examples/README.md doesn't list {script.name}"
+            assert script.name in listed, (
+                f"examples/README.md doesn't list {script.name}"
+            )
 
     def test_test_count_claim_matches_reality(self) -> None:
         """Every 'N tests' claim in the README is the real count."""
         actual = _actual_test_count()
         for claimed in re.findall(r"(\d+)\s+tests", self.readme_text):
-            assert (
-                int(claimed) == actual
-            ), f"README claims {claimed} tests but actual is {actual}"
+            assert int(claimed) == actual, (
+                f"README claims {claimed} tests but actual is {actual}"
+            )
 
 
 # ---------------------------------------------------------------------------
@@ -271,9 +269,9 @@ class TestEngineClaims:
 
     def test_required_tags_documented(self) -> None:
         for tag in diag_mod._REQUIRED_TAGS:
-            assert (
-                tag in self.readme_text
-            ), f"README doesn't mention required tag {tag}"
+            assert tag in self.readme_text, (
+                f"README doesn't mention required tag {tag}"
+            )
 
     def test_severity_scale_documented(self) -> None:
         """The README references the Severity enum used by diagnostics."""
