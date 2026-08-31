@@ -32,6 +32,7 @@ interrogate = "^1.7.0"
 # backport the conformance gate does not run there at all.
 tomli = { version = ">=2", python = "<3.11" }
 packaging = ">=23"
+hypothesis = ">=6.82,<7"
 
 
 [build-system]
