@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.19] - 2026-08-31
+
+### Changed
+
+- Extended MT940 diagnostic regex to support reversal and electronic transaction codes (`RC`, `RD`, `EC`, `ED`) in `malformed-statement-line`.
+- Diagnostic rules maintained: `missing-tag`, `malformed-balance`, `malformed-statement-line`, and `orphan-information-line`.
+- Four runnable examples verified across the test suite.
+- Updated `bankstatementparser` dependency floor to `>=0.0.19`.
+
 ## [0.0.18] - 2026-08-29
 
 Aligns the `bankstatementparser` suite on one version number, and adds
@@ -242,3 +251,5 @@ The diagnostic engine still emits the same four codes — `missing-tag`,
   `__version__`, `pyproject.toml`, and `CHANGELOG.md` agree.
 
 [0.0.10]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.10
+
+[0.0.19]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.19

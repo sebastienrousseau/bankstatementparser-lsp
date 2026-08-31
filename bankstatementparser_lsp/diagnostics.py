@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from enum import IntEnum
 
 _BALANCE_RE = re.compile(r"^:(60F|62F):[CD]\d{6}[A-Z]{3}[0-9,]+$")
-_STATEMENT_RE = re.compile(r"^:61:\d{6}(?:\d{4})?[CD][0-9,]+.*$")
+_STATEMENT_RE = re.compile(r"^:61:\d{6}(?:\d{4})?[A-Z]{1,2}[0-9,]+.*$")
 _REQUIRED_TAGS: tuple[str, ...] = (":20:", ":25:", ":28C:", ":60F:", ":62F:")
 
 
