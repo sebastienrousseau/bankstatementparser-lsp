@@ -16,12 +16,12 @@
 </p>
 
 <p align="center">
-  <a href="https://pypi.org/project/bankstatementparser-lsp/"><img src="https://img.shields.io/pypi/v/bankstatementparser-lsp?style=for-the-badge" alt="PyPI version" /></a>
-  <a href="https://pypi.org/project/bankstatementparser-lsp/"><img src="https://img.shields.io/pypi/pyversions/bankstatementparser-lsp.svg?style=for-the-badge" alt="Python versions" /></a>
-  <a href="https://pypi.org/project/bankstatementparser-lsp/"><img src="https://img.shields.io/pypi/dm/bankstatementparser-lsp.svg?style=for-the-badge" alt="PyPI downloads" /></a>
-  <a href="https://github.com/sebastienrousseau/bankstatementparser-lsp/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/sebastienrousseau/bankstatementparser-lsp/ci.yml?branch=main&label=Tests&style=for-the-badge" alt="Tests" /></a>
-  <a href="https://github.com/sebastienrousseau/bankstatementparser-lsp/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/sebastienrousseau/bankstatementparser-lsp/ci.yml?branch=main&label=Coverage&style=for-the-badge" alt="Coverage" /></a>
-  <a href="#license"><img src="https://img.shields.io/pypi/l/bankstatementparser-lsp?style=for-the-badge" alt="License" /></a>
+  <a href="https://github.com/sebastienrousseau/bankstatementparser-lsp/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/sebastienrousseau/bankstatementparser-lsp/ci.yml?branch=main&label=Tests&style=for-the-badge&logo=github" alt="Tests" height="28" /></a>
+  <a href="https://github.com/sebastienrousseau/bankstatementparser-lsp/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/sebastienrousseau/bankstatementparser-lsp/ci.yml?branch=main&label=Coverage&style=for-the-badge" alt="Coverage" height="28" /></a>
+  <a href="https://pypi.org/project/bankstatementparser-lsp/"><img src="https://img.shields.io/pypi/v/bankstatementparser-lsp?style=for-the-badge&color=fc8d62&logo=python" alt="PyPI version" height="28" /></a>
+  <a href="https://pypi.org/project/bankstatementparser-lsp/"><img src="https://img.shields.io/pypi/pyversions/bankstatementparser-lsp.svg?style=for-the-badge" alt="Python versions" height="28" /></a>
+  <a href="https://pypi.org/project/bankstatementparser-lsp/"><img src="https://img.shields.io/pypi/dm/bankstatementparser-lsp.svg?style=for-the-badge" alt="PyPI downloads" height="28" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0%20OR%20MIT-blue.svg?style=for-the-badge" alt="License: Apache-2.0 OR MIT" height="28" /></a>
 </p>
 
 ---
