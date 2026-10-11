@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.28] - 2026-10-11
+
+### Changed
+
+- Diagnostic rules maintained: `missing-tag`, `malformed-balance`, `malformed-statement-line`, and `orphan-information-line`.
+- Four runnable examples verified across the test suite.
+- Bumped dependency to `bankstatementparser >= 0.0.28`.
+- Aligned version with `bankstatementparser` 0.0.28 suite release.
+
 ## [0.0.19] - 2026-08-31
 
 ### Changed
@@ -252,4 +261,5 @@ The diagnostic engine still emits the same four codes — `missing-tag`,
 
 [0.0.10]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.10
 
+[0.0.28]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.28
 [0.0.19]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.19
