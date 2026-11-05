@@ -270,5 +270,6 @@ The diagnostic engine still emits the same four codes — `missing-tag`,
 
 [0.0.10]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.10
 
+[0.0.29]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.29
 [0.0.28]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.28
 [0.0.19]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.19
