@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.29] - 2026-11-05
+
+### Changed
+
+- Diagnostic rules maintained: `missing-tag`, `malformed-balance`, `malformed-statement-line`, and `orphan-information-line`.
+- Four runnable examples verified across the test suite.
+- Bumped dependency to `bankstatementparser >= 0.0.29`.
+- Aligned version with `bankstatementparser` 0.0.29 suite release.
+
 ## [0.0.28] - 2026-10-11
 
 ### Changed
