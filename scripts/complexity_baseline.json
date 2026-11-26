@@ -1,0 +1,14 @@
+{
+  "bankstatementparser_lsp/diagnostics.py::diagnostics_for_mt940": {
+    "cognitive": 20,
+    "cyclomatic": 15,
+    "lines": 90
+  },
+  "tests/test_suite_conformance.py": {
+    "file_lines": 678
+  },
+  "tests/test_suite_conformance.py::_dev_spec": {
+    "cognitive": 23,
+    "cyclomatic": 12
+  }
+}
