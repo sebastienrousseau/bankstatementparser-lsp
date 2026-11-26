@@ -1,4 +1,4 @@
-.PHONY: help install dev test lint format type-check security clean examples doc-coverage check
+.PHONY: help install dev test lint format type-check security clean examples doc-coverage complexity check
 
 PYTHON ?= python3
 POETRY ?= poetry
@@ -48,4 +48,11 @@ examples: ## Verify example scripts run
 doc-coverage: ## Enforce the 100% docstring coverage gate
 	$(POETRY) run interrogate -c pyproject.toml -v bankstatementparser_lsp
 
-check: lint type-check security test doc-coverage examples ## Run all gates
+# Per-function ceilings (cyclomatic 10, cognitive 15, Halstead 30,
+# 60 lines; 500 lines per file) against scripts/complexity_baseline.json,
+# which may only shrink. Record an improvement with
+# `python3 scripts/check_complexity.py --update`.
+complexity: ## Enforce the complexity baseline
+	$(PYTHON) scripts/check_complexity.py
+
+check: lint type-check complexity security test doc-coverage examples ## Run all gates
