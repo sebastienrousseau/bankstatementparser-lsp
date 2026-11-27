@@ -53,6 +53,9 @@ examples: ## Verify example scripts run
 doc-coverage: ## Enforce the 100% docstring coverage gate
 	$(POETRY) run interrogate -c pyproject.toml -v bankstatementparser_lsp
 
+demo: ## Render the README demo GIF with VHS
+	vhs .github/demo.tape
+
 docs: ## Build the user manual (mkdocs --strict) into site/
 	$(POETRY) install --with docs
 	NO_MKDOCS_2_WARNING=1 $(POETRY) run mkdocs build --strict
