@@ -36,3 +36,13 @@ tmp/
 .mypy_cache/
 .ruff_cache/
 bankstatementparser_lsp.egg-info/
+
+# libFuzzer working corpus and reproducers from fuzz/fuzz_diagnostics.py
+.fuzz-corpus/
+crash-*
+leak-*
+timeout-*
+oom-*
+
+# MkDocs build output
+site/

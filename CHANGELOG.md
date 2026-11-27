@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.36] - 2026-11-27
+
+### Added
+
+- An Atheris fuzz target, `fuzz/fuzz_diagnostics.py`, for
+  `diagnostics_for_mt940` and the `lsprotocol` conversion, with a seed
+  corpus; it fails on any exception or any diagnostic outside the
+  document. CI runs it for 120 s on every change; `make fuzz` locally.
+- A MkDocs Material user manual (`mkdocs.yml`, `docs/`) with an
+  mkdocstrings API reference, built with `--strict` on every pull
+  request and deployed to GitHub Pages from `main`
+  (`.github/workflows/docs.yml`, `make docs`). It replaces a Sphinx
+  configuration that nothing built.
+- `docs/POLICIES.md`, `docs/BENCHMARKS.md` (a run of
+  `benches/bench_diagnostics.py` with its environment),
+  `docs/COMPARISON.md`, `docs/diagnostics.md`, `docs/editors.md` and
+  `docs/suite.md`.
+- Signed releases: keyless cosign `.sig` and `.pem` per distribution,
+  SLSA provenance (`bankstatementparser-lsp-vX.Y.Z.intoto.jsonl`,
+  slsa-github-generator 2.1.0), CycloneDX and SPDX SBOMs and a licence
+  manifest on every GitHub release, and PEP 740 attestations on PyPI.
+- The OpenSSF Scorecard workflow, the suite's Docs Lint workflow
+  (`scripts/readme-check.sh` and markdownlint), the portfolio pull
+  request template, and `.github/demo.gif` rendered by `make demo` from
+  `.github/demo.tape`.
+- Hash-pinned requirement sets exported from the lock
+  (`requirements/{runtime,ci,fuzz,docs}.txt`, by the suite's
+  `scripts/export_locked_requirements.py`) and compiled release tooling
+  (`requirements/{build,sbom}.txt`).
+
+### Changed
+
+- Require `bankstatementparser >= 0.0.35`, the newest core release, and
+  align the version with the suite's 0.0.36 release; `poetry.lock`
+  moves core to 0.0.35.
+- CI pins every action by commit SHA, installs only the hashed lock
+  exports, and tests CPython 3.10 to 3.14 on Ubuntu, macOS and Windows.
+  Write permissions sit on the jobs that need them.
+- The Docker image builds from a digest-pinned `python:3.14-slim` and
+  installs the locked runtime set with `--require-hashes`; Dependabot
+  now tracks the base image.
+- `README.md` follows the portfolio template and states the
+  Apache-2.0 OR MIT licence; the suite table moves to `docs/suite.md`.
+  `CODE-OF-CONDUCT.md` is now `CODE_OF_CONDUCT.md`, and the issue
+  templates ask for the editor and an MT940 document.
+- `ROADMAP.md` no longer calls v0.0.13 current or targets v0.1.0.
+- Diagnostic rules maintained: `missing-tag`, `malformed-balance`,
+  `malformed-statement-line`, and `orphan-information-line`.
+- Four runnable examples verified across the test suite.
+
 ## [0.0.35] - 2026-11-26
 
 ### Added
@@ -278,7 +328,7 @@ the run, locally as well as in CI.
 
 - **UTF-8 BOM false positive.** A leading UTF-8 byte-order mark
   (`U+FEFF`) is not whitespace, so when an MT940 file was exported with a
-  BOM it clung to the first tag (`﻿:20:`) and the engine reported a
+  BOM it clung to the first tag (`:20:`) and the engine reported a
   spurious `missing-tag` for `:20:`. `diagnostics_for_mt940` now strips a
   single leading BOM before scanning, so BOM-prefixed documents lint
   identically to their plain counterparts. This is the only engine

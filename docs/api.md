@@ -1,29 +1,17 @@
-# Python API reference
+# API reference
 
-The standalone server's importable Python surface (used by the runnable
-examples and any tooling that wires the pure diagnostic engine
-in-process without going through the LSP transport).
+The importable Python surface: the pure diagnostic engine, which any
+tool can call in-process, and the server glue that maps its results to
+`lsprotocol` and publishes them. Generated from the docstrings by
+mkdocstrings.
 
-```{eval-rst}
-.. automodule:: bankstatementparser_lsp
-   :members:
-   :undoc-members:
-```
+::: bankstatementparser_lsp.diagnostics
 
-## Diagnostics module
-
-```{eval-rst}
-.. automodule:: bankstatementparser_lsp.diagnostics
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
-
-## Server module
-
-```{eval-rst}
-.. automodule:: bankstatementparser_lsp.server
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
+::: bankstatementparser_lsp.server
+    options:
+      members:
+        - main
+        - did_open
+        - did_change
+        - "_to_lsp_diagnostic"
+        - "_publish"
