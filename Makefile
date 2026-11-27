@@ -53,6 +53,10 @@ examples: ## Verify example scripts run
 doc-coverage: ## Enforce the 100% docstring coverage gate
 	$(POETRY) run interrogate -c pyproject.toml -v bankstatementparser_lsp
 
+docs: ## Build the user manual (mkdocs --strict) into site/
+	$(POETRY) install --with docs
+	NO_MKDOCS_2_WARNING=1 $(POETRY) run mkdocs build --strict
+
 # Per-function ceilings (cyclomatic 10, cognitive 15, Halstead 30,
 # 60 lines; 500 lines per file) against scripts/complexity_baseline.json,
 # which may only shrink. Record an improvement with

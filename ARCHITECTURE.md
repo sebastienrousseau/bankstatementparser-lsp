@@ -32,9 +32,13 @@ objects into `lsprotocol` types and publishes them.
 | **Server** | `bankstatementparser_lsp/server.py` | pygls `LanguageServer` instance, `did_open` / `did_change` handlers, `_to_lsp_diagnostic` / `_publish` glue |
 | **Entry point** | `bankstatementparser_lsp.server:main` (console script: `bankstatementparser-lsp`) | Launches the server over stdio |
 | **Version** | `bankstatementparser_lsp/__init__.py` | Single source of truth (`__version__`); re-exports the engine's public surface |
-| **Tests** | `tests/test_lsp.py` | Engine unit tests + server glue tests via a fake LanguageServer |
+| **Tests** | `tests/` | Engine unit tests and server glue tests via a fake LanguageServer (`test_lsp.py`), Hypothesis properties (`test_fuzz.py`), docs and examples accuracy, release notes, and the shared suite conformance gate |
+| **Fuzzing** | `fuzz/fuzz_diagnostics.py`, `fuzz/corpus/` | Atheris target for the engine and its `lsprotocol` conversion, run by the CI `Fuzz` job |
 | **Examples** | `examples/` | One runnable script per usage shape |
-| **Release helpers** | `scripts/verify_versions.py` | Asserts `__version__`, `pyproject.toml`, and `CHANGELOG.md` agree |
+| **Editors** | `editors/vscode/` | TypeScript language-client scaffold for VS Code |
+| **Manual** | `mkdocs.yml`, `docs/` | The MkDocs Material user manual and API reference, deployed to GitHub Pages |
+| **Container** | `Dockerfile` | Digest-pinned multi-stage image that runs the server over stdio |
+| **Release helpers** | `scripts/` | `verify_versions.py` (`__version__`, `pyproject.toml` and `CHANGELOG.md` agree), `release_notes.py` (release body), `export_locked_requirements.py` (hashed exports of `poetry.lock`), `check_complexity.py` (complexity baseline), `check_suite_consistency.py` (published suite agrees), `readme-check.sh` (README template) |
 
 ## Editor features
 
