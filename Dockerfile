@@ -5,7 +5,7 @@
 # client can launch it directly with ``docker run -i --rm bankstatementparser-lsp``.
 
 # Pinned by digest; Dependabot's docker updater moves it.
-FROM python:3.14-slim@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f AS builder
+FROM python:3.15-slim@sha256:63bb298d2b7b88f176f51b5189f54ce6535c997682ea70885d2132f5d473a8a5 AS builder
 
 WORKDIR /build
 
@@ -28,7 +28,7 @@ RUN python -m venv /opt/venv \
     && /opt/venv/bin/pip wheel --no-deps --wheel-dir /tmp/wheels . \
     && /opt/venv/bin/pip install --no-deps /tmp/wheels/*.whl
 
-FROM python:3.14-slim@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
+FROM python:3.15-slim@sha256:63bb298d2b7b88f176f51b5189f54ce6535c997682ea70885d2132f5d473a8a5
 
 LABEL org.opencontainers.image.title="bankstatementparser-lsp" \
       org.opencontainers.image.description="Language Server Protocol server that lints MT940 bank-statement files, backed by the bankstatementparser library." \
