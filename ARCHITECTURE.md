@@ -8,7 +8,7 @@ prior context.
 
 ## The pipeline
 
-```
+```text
 Editor LSP client (Neovim, VS Code, Helix, ...)
         |  stdio (LSP JSON-RPC)
         v

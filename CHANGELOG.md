@@ -286,7 +286,7 @@ the run, locally as well as in CI.
 
 - **UTF-8 BOM false positive.** A leading UTF-8 byte-order mark
   (`U+FEFF`) is not whitespace, so when an MT940 file was exported with a
-  BOM it clung to the first tag (`﻿:20:`) and the engine reported a
+  BOM it clung to the first tag (`:20:`) and the engine reported a
   spurious `missing-tag` for `:20:`. `diagnostics_for_mt940` now strips a
   single leading BOM before scanning, so BOM-prefixed documents lint
   identically to their plain counterparts. This is the only engine

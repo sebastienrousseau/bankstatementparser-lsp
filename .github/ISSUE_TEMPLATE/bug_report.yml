@@ -42,15 +42,6 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: file_type
-    attributes:
-      label: File Type
-      options:
-        - JSON (record array)
-        - CSV
-    validations:
-      required: true
-  - type: dropdown
     id: os
     attributes:
       label: Operating System
@@ -68,24 +59,24 @@ body:
     validations:
       required: true
   - type: textarea
-    id: reproducer
+    id: document
     attributes:
-      label: Minimal File Snippet
+      label: MT940 Document
       description: |
-        A snippet (5-20 lines) of the MT940 statement that triggers the
-        problem. Redact any sensitive account numbers - placeholders
-        are fine.
+        The smallest MT940 text that shows the problem (redact any
+        sensitive account numbers or balances - placeholder data is fine).
       render: text
     validations:
       required: true
   - type: textarea
-    id: server_log
+    id: error_output
     attributes:
-      label: Server stderr / LSP trace
-      description: |
-        Anything the language server emitted, plus the LSP message
-        trace if your editor surfaces one.
+      label: Diagnostics Or Error Output
+      description: The diagnostics the editor showed (or should have shown), or the server's stack trace.
+    validations:
+      required: true
   - type: textarea
     id: extra
     attributes:
       label: Anything Else
+      description: Logs, server stderr, editor LSP config, etc.

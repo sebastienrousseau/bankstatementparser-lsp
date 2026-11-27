@@ -8,8 +8,8 @@ body:
     attributes:
       label: Problem Statement
       description: |
-        What can't you express in an editor today? If this surfaces an
-        existing bankstatementparser validator, link to it.
+        What can't you do today with bankstatementparser-lsp? If this surfaces an
+        existing bankstatementparser helper, link to it.
     validations:
       required: true
   - type: textarea
@@ -17,9 +17,16 @@ body:
     attributes:
       label: Proposed Solution
       description: |
-        Sketch the LSP feature - method (textDocument/*), payload
-        shape, expected severity / kind. Reference the parent bankstatementparser
-        API surface where relevant.
+        Sketch the diagnostic or LSP feature: the LSP method
+        (textDocument/*), what it reports, and its severity. Reference the parent bankstatementparser API surface where
+        relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Real-World Use Case
+      description: How would you use this while editing a statement?
     validations:
       required: true
   - type: dropdown
@@ -27,20 +34,10 @@ body:
     attributes:
       label: LSP Surface
       options:
-        - Diagnostics (JSON mode)
-        - Diagnostics (CSV mode)
-        - Completion
-        - Hover
-        - Code action
-        - Formatting
-        - Document symbols
+        - Diagnostics
+        - Code actions
+        - Hover / completion
         - Other
-    validations:
-      required: true
-  - type: textarea
-    id: use_case
-    attributes:
-      label: Real-World Use Case
     validations:
       required: true
   - type: textarea
@@ -51,3 +48,4 @@ body:
     id: contribution
     attributes:
       label: Willingness To Contribute
+      description: Could you take a stab at the implementation or tests?
