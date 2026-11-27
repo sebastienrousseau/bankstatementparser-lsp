@@ -8,6 +8,7 @@ on:
       - ".dockerignore"
       - "bankstatementparser_lsp/**"
       - "pyproject.toml"
+      - "requirements/runtime.txt"
       - ".github/workflows/docker.yml"
     tags:
       - "v*.*.*"
@@ -17,14 +18,12 @@ on:
       - ".dockerignore"
       - "bankstatementparser_lsp/**"
       - "pyproject.toml"
+      - "requirements/runtime.txt"
       - ".github/workflows/docker.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
-  packages: write
-  attestations: write
-  id-token: write
 
 env:
   REGISTRY: ghcr.io
@@ -34,18 +33,20 @@ jobs:
   build:
     name: Build (and publish on tag/main)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write       # push the image to GHCR
+      attestations: write   # attest build provenance
+      id-token: write       # OIDC for the attestation
     steps:
-      - uses: actions/checkout@v7
-
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Set up QEMU (for multi-arch builds)
-        uses: docker/setup-qemu-action@v4
-
+        uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
       - name: Log in to GitHub Container Registry
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v4
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -53,7 +54,7 @@ jobs:
 
       - name: Extract image metadata
         id: meta
-        uses: docker/metadata-action@v6
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -66,16 +67,11 @@ jobs:
             org.opencontainers.image.title=bankstatementparser-lsp
             org.opencontainers.image.description=Language Server Protocol server that lints MT940 bank-statement files, backed by the bankstatementparser library.
             org.opencontainers.image.source=https://github.com/sebastienrousseau/bankstatementparser-lsp
-            org.opencontainers.image.licenses=Apache-2.0
-
-      - name: Resolve bankstatementparser install spec for build
-        id: pin
-        run: |
-          echo "spec=bankstatementparser>=0.0.11" >> "$GITHUB_OUTPUT"
+            org.opencontainers.image.licenses=Apache-2.0 OR MIT
 
       - name: Build (and push on non-PR events)
         id: build
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
         with:
           context: .
           file: ./Dockerfile
@@ -83,8 +79,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            BANKSTATEMENTPARSER_PIP_SPEC=${{ steps.pin.outputs.spec }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: true
