@@ -155,7 +155,7 @@ flowchart LR
 | Input handling | A leading UTF-8 BOM and CRLF line endings lint the same as plain LF text | Shipped |
 | Editors | Neovim and generic stdio clients; a VS Code client scaffold in `editors/vscode/` | Shipped |
 | Distribution | PyPI wheel and sdist, multi-arch GHCR image | Shipped |
-| Outline, hover, completion | Not implemented; see the [roadmap](ROADMAP.md) | Planned |
+| Outline, hover, code actions | `textDocument/documentSymbol`, `textDocument/hover` and per-diagnostic code actions; see the [roadmap](ROADMAP.md) | Planned |
 
 ---
 
@@ -206,7 +206,7 @@ The rules live in a pure, importable engine (`diagnostics_for_mt940`, returning 
 
 ## Configuration
 
-The server has no configuration file, command-line options or environment variables: `bankstatementparser-lsp` takes no arguments and always speaks LSP over stdio. Everything you configure lives in the editor: the command, the `mt940` filetype for `.mt940` / `.sta` files, and the root markers. The VS Code scaffold exposes one setting, `bankstatementparser.serverCommand` (default `bankstatementparser-lsp`). Because the command takes no arguments, there are no shell completions to generate.
+The server has no configuration file, command-line options or environment variables: `bankstatementparser-lsp` takes no arguments and always speaks LSP over stdio. Everything you configure lives in the editor: the command, the `mt940` filetype for `.mt940` / `.sta` files, and the root markers. The VS Code scaffold exposes one setting, `bankstatementparser.serverCommand` (default `bankstatementparser-lsp`). Because the command takes no arguments, a shell has nothing to tab-complete.
 
 ---
 
