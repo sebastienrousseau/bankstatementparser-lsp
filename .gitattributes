@@ -33,3 +33,6 @@ Makefile text eol=lf
 *.gz binary
 *.zip binary
 *.tar binary
+
+# Fuzz seeds are byte-exact inputs (one carries CRLF line ends on purpose).
+fuzz/corpus/** -text
