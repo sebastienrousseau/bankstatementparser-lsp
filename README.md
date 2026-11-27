@@ -91,7 +91,7 @@ Verify the installation:
 
 ```sh
 python -c "import bankstatementparser_lsp; print('bankstatementparser-lsp', bankstatementparser_lsp.__version__)"
-# -> bankstatementparser-lsp 0.0.35
+# -> bankstatementparser-lsp 0.0.36
 ```
 
 <details>
