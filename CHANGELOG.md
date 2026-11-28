@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pluggy, mypy-extensions, iniconfig, tzdata, packaging,
   typing-inspection, coverage, typing-extensions).
 
+### Fixed
+
+- The suite consistency check authenticates its GitHub API request
+  with the workflow token, so the shared anonymous rate limit no
+  longer fails it.
+
 ## [0.0.36] - 2026-11-27
 
 ### Added
