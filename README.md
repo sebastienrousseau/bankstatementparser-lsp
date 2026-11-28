@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sebastienrousseau/bankstatementparser-lsp/main/.github/demo.gif" alt="A terminal printing bankstatementparser-lsp 0.0.36, then the 01_lsp_helpers.py and 04_server_publish.py examples linting clean and broken MT940 statements and publishing their diagnostics" width="100%" />
+  <img src="https://raw.githubusercontent.com/sebastienrousseau/bankstatementparser-lsp/main/.github/demo.gif" alt="A terminal printing bankstatementparser-lsp 0.0.37, then the 01_lsp_helpers.py and 04_server_publish.py examples linting clean and broken MT940 statements and publishing their diagnostics" width="100%" />
 </p>
 
 ---
@@ -65,7 +65,7 @@
 pip install bankstatementparser-lsp
 ```
 
-That installs the `bankstatementparser-lsp` command, `bankstatementparser >= 0.0.35` and `pygls`.
+That installs the `bankstatementparser-lsp` command, `bankstatementparser >= 0.0.36` and `pygls`.
 
 | Channel | Command | Notes |
 | :--- | :--- | :--- |
@@ -77,7 +77,7 @@ Verify the installation:
 
 ```sh
 python -c "import bankstatementparser_lsp; print('bankstatementparser-lsp', bankstatementparser_lsp.__version__)"
-# -> bankstatementparser-lsp 0.0.36
+# -> bankstatementparser-lsp 0.0.37
 ```
 
 An isolated virtual environment keeps the server's dependencies apart:
@@ -100,7 +100,7 @@ Repology lists every repository that packages `bankstatementparser-lsp`. PyPI an
 ## Requirements
 
 - **Python 3.10 or later.** CI tests CPython 3.10, 3.11, 3.12, 3.13 and 3.14 on Linux, macOS and Windows; [`docs/POLICIES.md`](docs/POLICIES.md) says when the floor moves.
-- **[`bankstatementparser`](https://pypi.org/project/bankstatementparser/) 0.0.35 or later**, whose MT940 tag patterns the engine follows.
+- **[`bankstatementparser`](https://pypi.org/project/bankstatementparser/) 0.0.36 or later**, whose MT940 tag patterns the engine follows.
 - **[`pygls`](https://github.com/openlawlibrary/pygls) 2.1 or later on 2.x**, which brings `lsprotocol`.
 - **An LSP client** (Neovim, VS Code, Helix, Emacs, or any client that spawns a stdio server). The Docker image needs only a container runtime.
 
@@ -275,7 +275,7 @@ make check
 
 `make check` runs the local gates: `ruff` and `black`, `mypy --strict`, the complexity baseline (`scripts/check_complexity.py`), Bandit, `pytest` with a 100% line + branch coverage floor, `interrogate` at 100% docstring coverage, and the examples. Other targets: `make fuzz` (Atheris, 60 s, Linux x86_64 with Python 3.12+), `make docs` (the MkDocs manual, `--strict`) and `make demo` (re-renders the GIF above with VHS from `.github/demo.tape`). CI adds the OS by Python matrix, the Docker build, CodeQL, `pip-audit` on the locked requirements and the Docs Lint gates. The suite includes documentation and example regression tests ([`tests/test_docs_accuracy.py`](tests/test_docs_accuracy.py), [`tests/test_regression_docs.py`](tests/test_regression_docs.py), [`tests/test_regression_examples.py`](tests/test_regression_examples.py)) that execute every documented snippet and every `examples/*.py` script.
 
-Current state (v0.0.36): 100% line + branch coverage against a 100% enforced floor, mypy `--strict` clean, interrogate 100% docstring coverage. [`CONTRIBUTING.md`](CONTRIBUTING.md) covers branches, commit signing and sign-off.
+Current state (v0.0.37): 100% line + branch coverage against a 100% enforced floor, mypy `--strict` clean, interrogate 100% docstring coverage. [`CONTRIBUTING.md`](CONTRIBUTING.md) covers branches, commit signing and sign-off.
 
 ---
 

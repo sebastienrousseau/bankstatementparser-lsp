@@ -5,16 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.0.37] - 2026-11-28
 
 ### Changed
 
+- Require `bankstatementparser >= 0.0.36`, the newest core release, and
+  align the version with the suite's 0.0.37 release; `poetry.lock`
+  moves core to 0.0.36.
 - CI: four pinned actions move to their latest releases:
   codeql-action 4.39.5, markdownlint-cli2-action 25.1.0,
   cosign-installer 4.1.4 and sbom-action 0.24.4.
 - Dependencies: ten locked packages refreshed (cattrs, pygments,
   pluggy, mypy-extensions, iniconfig, tzdata, packaging,
   typing-inspection, coverage, typing-extensions).
+- Diagnostic rules maintained: `missing-tag`, `malformed-balance`,
+  `malformed-statement-line`, and `orphan-information-line`.
+- Four runnable examples verified across the test suite.
+- CI: `make security` and the Security workflow run bandit's full
+  scan with `pyproject.toml`'s config; `make security` no longer falls
+  back to a medium-severity-only run when the full scan fails.
 
 ### Fixed
 
@@ -412,6 +421,8 @@ The diagnostic engine still emits the same four codes — `missing-tag`,
 
 [0.0.10]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.10
 
+[0.0.37]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.37
+[0.0.36]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.36
 [0.0.35]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.35
 [0.0.34]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.34
 [0.0.33]: https://github.com/sebastienrousseau/bankstatementparser-lsp/releases/tag/v0.0.33

@@ -35,7 +35,7 @@ type-check: ## Run mypy type checking
 	$(POETRY) run mypy bankstatementparser_lsp/
 
 security: ## Run security scan (bandit)
-	$(POETRY) run bandit -r bankstatementparser_lsp/ -ll
+	$(POETRY) run bandit -r bankstatementparser_lsp/ -c pyproject.toml
 
 clean: ## Remove build artifacts and caches
 	rm -rf build/ dist/ *.egg-info .eggs/
