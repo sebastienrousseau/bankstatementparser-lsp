@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies: ten locked packages refreshed (cattrs, pygments,
   pluggy, mypy-extensions, iniconfig, tzdata, packaging,
   typing-inspection, coverage, typing-extensions).
+- Diagnostic rules maintained: `missing-tag`, `malformed-balance`,
+  `malformed-statement-line`, and `orphan-information-line`.
+- Four runnable examples verified across the test suite.
 
 ### Fixed
 
