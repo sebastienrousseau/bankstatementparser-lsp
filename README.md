@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sebastienrousseau/bankstatementparser-lsp/main/.github/demo.gif" alt="A terminal printing bankstatementparser-lsp 0.0.36, then the 01_lsp_helpers.py and 04_server_publish.py examples linting clean and broken MT940 statements and publishing their diagnostics" width="100%" />
+  <img src="https://raw.githubusercontent.com/sebastienrousseau/bankstatementparser-lsp/main/.github/demo.gif" alt="A terminal printing bankstatementparser-lsp 0.0.37, then the 01_lsp_helpers.py and 04_server_publish.py examples linting clean and broken MT940 statements and publishing their diagnostics" width="100%" />
 </p>
 
 ---
