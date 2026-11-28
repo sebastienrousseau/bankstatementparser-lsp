@@ -65,7 +65,7 @@
 pip install bankstatementparser-lsp
 ```
 
-That installs the `bankstatementparser-lsp` command, `bankstatementparser >= 0.0.35` and `pygls`.
+That installs the `bankstatementparser-lsp` command, `bankstatementparser >= 0.0.36` and `pygls`.
 
 | Channel | Command | Notes |
 | :--- | :--- | :--- |
@@ -100,7 +100,7 @@ Repology lists every repository that packages `bankstatementparser-lsp`. PyPI an
 ## Requirements
 
 - **Python 3.10 or later.** CI tests CPython 3.10, 3.11, 3.12, 3.13 and 3.14 on Linux, macOS and Windows; [`docs/POLICIES.md`](docs/POLICIES.md) says when the floor moves.
-- **[`bankstatementparser`](https://pypi.org/project/bankstatementparser/) 0.0.35 or later**, whose MT940 tag patterns the engine follows.
+- **[`bankstatementparser`](https://pypi.org/project/bankstatementparser/) 0.0.36 or later**, whose MT940 tag patterns the engine follows.
 - **[`pygls`](https://github.com/openlawlibrary/pygls) 2.1 or later on 2.x**, which brings `lsprotocol`.
 - **An LSP client** (Neovim, VS Code, Helix, Emacs, or any client that spawns a stdio server). The Docker image needs only a container runtime.
 
