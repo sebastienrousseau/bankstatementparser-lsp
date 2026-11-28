@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Diagnostic rules maintained: `missing-tag`, `malformed-balance`,
   `malformed-statement-line`, and `orphan-information-line`.
 - Four runnable examples verified across the test suite.
+- CI: `make security` and the Security workflow run bandit's full
+  scan with `pyproject.toml`'s config; `make security` no longer falls
+  back to a medium-severity-only run when the full scan fails.
 
 ### Fixed
 
