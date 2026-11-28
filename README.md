@@ -77,7 +77,7 @@ Verify the installation:
 
 ```sh
 python -c "import bankstatementparser_lsp; print('bankstatementparser-lsp', bankstatementparser_lsp.__version__)"
-# -> bankstatementparser-lsp 0.0.36
+# -> bankstatementparser-lsp 0.0.37
 ```
 
 An isolated virtual environment keeps the server's dependencies apart:
@@ -275,7 +275,7 @@ make check
 
 `make check` runs the local gates: `ruff` and `black`, `mypy --strict`, the complexity baseline (`scripts/check_complexity.py`), Bandit, `pytest` with a 100% line + branch coverage floor, `interrogate` at 100% docstring coverage, and the examples. Other targets: `make fuzz` (Atheris, 60 s, Linux x86_64 with Python 3.12+), `make docs` (the MkDocs manual, `--strict`) and `make demo` (re-renders the GIF above with VHS from `.github/demo.tape`). CI adds the OS by Python matrix, the Docker build, CodeQL, `pip-audit` on the locked requirements and the Docs Lint gates. The suite includes documentation and example regression tests ([`tests/test_docs_accuracy.py`](tests/test_docs_accuracy.py), [`tests/test_regression_docs.py`](tests/test_regression_docs.py), [`tests/test_regression_examples.py`](tests/test_regression_examples.py)) that execute every documented snippet and every `examples/*.py` script.
 
-Current state (v0.0.36): 100% line + branch coverage against a 100% enforced floor, mypy `--strict` clean, interrogate 100% docstring coverage. [`CONTRIBUTING.md`](CONTRIBUTING.md) covers branches, commit signing and sign-off.
+Current state (v0.0.37): 100% line + branch coverage against a 100% enforced floor, mypy `--strict` clean, interrogate 100% docstring coverage. [`CONTRIBUTING.md`](CONTRIBUTING.md) covers branches, commit signing and sign-off.
 
 ---
 
